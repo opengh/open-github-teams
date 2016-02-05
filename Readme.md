@@ -1,7 +1,8 @@
-[![Coverage Status](https://coveralls.io/repos/github/martinheidegger/open-github-teams/badge.svg?branch=master)](https://coveralls.io/github/martinheidegger/open-github-teams?branch=master)
-
-
 # Open Github Teams Server
+
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+[![Build Status](https://travis-ci.org/martinheidegger/open-github-teams.svg?branch=master)](https://travis-ci.org/martinheidegger/open-github-teams)
+[![Coverage Status](https://coveralls.io/repos/github/martinheidegger/open-github-teams/badge.svg?branch=master)](https://coveralls.io/github/martinheidegger/open-github-teams?branch=master)
 
 The github team api [is private](https://developer.github.com/v3/orgs/teams/#list-teams).
 
