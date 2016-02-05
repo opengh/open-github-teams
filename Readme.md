@@ -22,7 +22,25 @@ a little configuration and makes the teams accessible via _JSON_ and _HTML_.
 
 1. Install with `$ npm i open-github-teams -g` _(you might need to prefix `sudo`)_
 2. Get a private token from the github settings. The required permissions are `read:org` and `admin:org_hook`. ![Get a private token](web/static/private_token.gif)
-3. Start it with `$ env GITHUB_TOKEN="<your-token-here>" GITHUB_ORG="<your-org-here>" open-github-teams`
+3. Start it with
+   ```
+   $ env GITHUB_TOKEN="<your-token-here>" GITHUB_ORG="<your-org-here>" open-github-teams
+   ```
+4. Open the url in the browser after it says its connected. Enjoy.
+
+## Ports
+
+By default, the server will be started on the `80` port in http mode and Additionally
+at the `443` port if https is required. You can change those two values by specifying
+a `HTTPS_PORT` and `HTTP_PORT`.
+
+```
+$ env GITHUB_TOKEN="<your-token-here>" \
+     GITHUB_ORG="<your-org-here>" \
+     HTTPS_PORT=8443 \
+     HTTP_PORT=8000 \
+     open-github-teams
+```
 
 ## Immediate update
 
@@ -31,17 +49,37 @@ only every 20 days! To have immediate updates it is possible to setup Github hoo
 that invalidate the cache.
 
 Since its not a good idea if others can invalidate the cache you need to create
-a `SECRET_KEY` that verifies that github is the one updating.
+a `SECRET` that verifies that github is the one updating. To avoid that other
+people know this code the server has to run via __https__. _open-github-teams_
+automatically starts a free-ssl server using [letsencrypt](https://letsencrypt.org/).
+Because it is _free_ you need to provide a email address and a pro-forma
+_I-agree-with-the-Terms-of-Service_ field that signs that you confirm with the [tos](https://letsencrypt.org/documents/LE-SA-v1.0.1-July-27-2015.pdf).
 
-_Note: to avoid that other people know this code the server has to run via https._
-
+```
+$ env GITHUB_TOKEN="<your-token-here>" \
+     GITHUB_ORG="<your-org-here>" \
+     HTTP_PORT=8000 \
+     SECRET="<your-secret-here" \
+     HTTPS_EMAIL="<your-email-here>" \
+     HTTPS_AGREE="yes" \
+     HTTPS_PORT=8443 \
+     open-github-teams
+```
 Steps to setup immediate update:
 
-1. Generate a good secret key (_Mac/Linux:_ `head -n 4096 /dev/urandom | shasum -a 256`)
-2. Start the server with an additional env variable: `SECRET=<your-secret>`
-3. Setup the github webhook to `/webhook` for your server and enter the secret.
+### How to generate a good secret
 
-When the server receives a webhook properly it will output a notification in the
-footer of the landing page.
+Generate a good secret key on _Mac/Linux_ with
+
+```
+$ head -n 4096 /dev/urandom | shasum -a 256
+```
 
 ## Contribute
+
+PR's and suggestions are always welcome! Please follow [Contributing.md](Contributing.md)
+or open an issue if you have any problem.
+
+## License
+
+[ISC](https://en.wikipedia.org/wiki/ISC_license)
