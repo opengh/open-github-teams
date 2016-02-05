@@ -1,0 +1,9 @@
+body {
+  padding-bottom: 4em;
+}
+footer {
+  position: fixed;
+  bottom: 0;
+  height: 4em;
+  background: white;
+}

@@ -1,0 +1,38 @@
+#!/usr/bin/env node
+
+//var createServer = require('auto-sni')
+var hapi = require('hapi')
+var server = new hapi.Server()
+/*
+var secureServer = createServer({
+  email: 'm@we-are-root.com',
+  agreeTos: true
+})
+*/
+
+server.connection({
+  port: 8081
+})
+server.register([{
+  register: require('good'),
+  options: {
+    opsInterval: 1000,
+    reporters: [{
+      reporter: require('good-console'),
+      events: { log: '*', response: '*', error: '*' }
+    }]
+  }
+}, {
+  register: require('../lib/hapiPlugin.js'),
+  options: {
+    githubOrganization: 'nodeschool',
+    githubApiToken: '3a6f8e06cf9de209b64388a67b3d64207c46b675',
+    webhookSecret: 'fancypants'
+  }
+}], function (err) {
+  if (err) throw err
+  server.start(function (err) {
+    if (err) throw err
+    console.log('Server running at:', server.info.uri)
+  })
+})

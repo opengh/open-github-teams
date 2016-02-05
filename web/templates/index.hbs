@@ -1,0 +1,91 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Github Teams of {{org}}</title>
+    <link rel="stylesheet" type="text/css" href="static/style.css"></link>
+  </head>
+  <body>
+    <header>
+      <h1 id="top">
+        Github Teams of <a href="https://github.com/{{org}}" title="Github home of {{org}}">{{org}}</a>
+      </h1>
+      <p class="description page-description">
+        This page shows the list of all Teams of the Github Organization <strong>{{org}}</strong>.
+        To get the raw data access: <a href="teams.json" target="_blank" title="Raw json file">/teams.json</a>.
+        If you are an administrator of this organization you can modify the
+        teams <a href="https://github.com/orgs/nodeschool/teams" title="Github Backend to administer the teams of {{org}}">
+        here</a>.
+      </p>
+    </header>
+    {{#if teams}}
+      <ul class="teams">
+      {{#each teams}}
+          <li>
+            <h2 id="team_{{slug}}">
+              <a href="https://github.com/orgs/{{org}}/teams/{{slug}}" title="Github settings for this team." target="_blank">{{name}}</a>
+            </h2>
+            <p class="description team-description">{{description}}</p>
+            <h3 id="team_{{slug}}_members">Members</h3>
+            {{#if members}}
+              <ul class="member-list">
+                {{#each members}}
+                  <li>
+                    <a href="https://github.com/{{login}}" title="`{{name}}` at Github" target="_blank">
+                      {{#if avatar_url}}
+                        <img src="{{avatar_url}}">
+                      {{/if}}
+                      <caption>{{name}}</caption>
+                    </a>
+                  </li>
+                {{/each}}
+              </ul>
+            {{else}}
+              <p class="message member-empty">No members in this team.</p>
+            {{/if}}
+            <h3 id="team_{{slug}}_repos">Repositories</h3>
+            {{#if repos}}
+              <ul class="repo-list">
+                {{#each repos}}
+                  <li>
+                    <a href="https://github.com/{{full_name}}" title="`{{name}}`" target="_blank">{{name}}</a>
+                  </li>
+                {{/each}}
+              </ul>
+            {{else}}
+              <p class="message repo-empty">No repositories have been assigned to this team.</p>
+            {{/if}}
+          </li>
+      {{/each}}
+      </ul>
+    {{else}}
+      <p class="message page-empty">No Teams were found in this Organization.</p>
+    {{/if}}
+    <footer>
+      {{#if hasWebhook}}
+        {{#if lastWebhook}}
+          <p class="webhook webhook-ok">
+            Note: The webhook is working fine. <span class="moment moment-since" data-last="{{lastWebhook}}"></span>
+          </p>
+        {{else}}
+          <p class="webhook webhook-missing">
+            Note: No github webhook has been triggered <strong>yet</strong>. Learn how to setup
+            immediate updates <a href="http://github.com/martinheidegger/open-github-teams" title="Immediate Update Guide." target="_blank">here</a>.
+            The next automatic update will be at <span class="webhook-update">{{nextAutoUpdate}}</span>.
+          </p>
+        {{/if}}
+      {{else}}
+        <p class="webhook webhook-disabled">
+          Note: this repository will not be immediately updated when a change happens at github.
+          It is possible to setup immediate updates through webhooks. Learn how to setup
+          immediate updates  <a href="http://github.com/martinheidegger/open-github-teams" title="Immediate Update Guide." target="_blank">here</a>.
+          The next automatic update will be at <span class="webhook-update">{{nextAutoUpdate}}</span>.
+        </p>
+      {{/if}}
+      <div class="more">
+        <a href="http://github.com/martinheidegger/open-github-teams" target="_blank" title="Project Homepage">Open Github Teams</a> is an
+        <a href="https://opensource.org/" target="_blank" title="Definition Opensource">Open Source</a> project by
+        <a href="https://github.com/martinheidegger" target="_blank" title="Martin Heideggers Github page">Martin Heidegger</a>.
+      </div>
+    </footer>
+  </body>
+</html>
