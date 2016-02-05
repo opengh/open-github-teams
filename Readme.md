@@ -21,7 +21,7 @@ a little configuration and makes the teams accessible via _JSON_ and _HTML_.
 ## Get started!
 
 1. Install with `$ npm i open-github-teams -g` _(you might need to prefix `sudo`)_
-2. Get a private token from the github settings. The required permissions are `org:read` and `admin:org_hook`. ![Get a private token](private_token.gif)
+2. Get a private token from the github settings. The required permissions are `read:org` and `admin:org_hook`. ![Get a private token](private_token.gif)
 3. Start it with `$ env GITHUB_TOKEN="<your-token-here>" GITHUB_ORG="<your-org-here>" open-github-teams`
 
 ## Immediate update
