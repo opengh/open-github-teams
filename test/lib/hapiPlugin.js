@@ -12,6 +12,7 @@ describe('The hapi plugin', function () {
       register: hapiPlugin,
       options: {
         githubApiToken: 'abcd',
+        githubOrganization: 'mona',
         webhookSecret: secret
       }
     }, function (err) {
