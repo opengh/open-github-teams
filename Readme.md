@@ -1,3 +1,6 @@
+[![Coverage Status](https://coveralls.io/repos/github/martinheidegger/open-github-teams/badge.svg?branch=master)](https://coveralls.io/github/martinheidegger/open-github-teams?branch=master)
+
+
 # Open Github Teams Server
 
 The github team api [is private](https://developer.github.com/v3/orgs/teams/#list-teams).
@@ -9,15 +12,15 @@ The github team api [is private](https://developer.github.com/v3/orgs/teams/#lis
 This is awesome if you have a private organization but it complicates running an
 open organization like [NodeSchool](http://nodeschool.io/).
 
-**`open-github-teams` to the rescue!!!**
+**open-github-teams to the rescue!!!**
 
 `open-github-teams` is a small [Node.js](https://nodejs.org/en/) server that takes
-a little configuration and makes the teams accessible via `JSON` and `HTML`.
+a little configuration and makes the teams accessible via _JSON_ and _HTML_.
 
 ## Get started!
 
 1. Install with `$ npm i open-github-teams -g` _(you might need to prefix `sudo`)_
-2. Get a private token from the github settings ([video here]()). The required permissions are `org:read` and `admin:org_hook`
+2. Get a private token from the github settings. The required permissions are `org:read` and `admin:org_hook`. ![Get a private token](private_token.gif)
 3. Start it with `$ env GITHUB_TOKEN="<your-token-here>" GITHUB_ORG="<your-org-here>" open-github-teams`
 
 ## Immediate update
