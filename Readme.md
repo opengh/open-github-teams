@@ -15,13 +15,13 @@ open organization like [NodeSchool](http://nodeschool.io/).
 
 **open-github-teams to the rescue!!!**
 
-`open-github-teams` is a small [Node.js](https://nodejs.org/en/) server that takes
+_open-github-teams_ is a small [Node.js](https://nodejs.org/en/) server that takes
 a little configuration and makes the teams accessible via _JSON_ and _HTML_.
 
 ## Get started!
 
 1. Install with `$ npm i open-github-teams -g` _(you might need to prefix `sudo`)_
-2. Get a private token from the github settings. The required permissions are `read:org` and `admin:org_hook`. ![Get a private token](private_token.gif)
+2. Get a private token from the github settings. The required permissions are `read:org` and `admin:org_hook`. ![Get a private token](web/static/private_token.gif)
 3. Start it with `$ env GITHUB_TOKEN="<your-token-here>" GITHUB_ORG="<your-org-here>" open-github-teams`
 
 ## Immediate update

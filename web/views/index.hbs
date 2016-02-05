@@ -1,0 +1,135 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Github Teams of {{org}}</title>
+    <link rel="stylesheet" type="text/css" href="static/style.css"></link>
+  </head>
+  <body>
+    {{#if org}}
+      <header>
+        <h1 id="top">
+          Github Teams of <a href="https://github.com/{{org}}" title="Github home of {{org}}">{{org}}</a>
+        </h1>
+        <p class="description page-description">
+          This page shows the list of all Teams of the Github Organization <strong>{{org}}</strong>.<br/>
+        </p>
+        {{#if teams}}
+        <p class="description page-stats">
+          Totally there are <strong>{{totalMembers}}</strong> members
+          in <strong>{{count teams}}</strong> teams.
+        </p>
+        {{/if}}
+        <p class="description page-raw">
+          {{#if teams}}
+          <strong>Raw:</strong> <a href="teams.json" target="_blank" title="Raw json file">teams.json</a><br>
+          {{/if}}
+          <strong>Admin:</strong> <a
+            href="https://github.com/orgs/nodeschool/teams"
+            title="Github Backend to administer the teams of {{org}}"
+            target="_blank"
+          >https://github.com/orgs/nodeschool/teams</a>
+        </p>
+      </header>
+      <section>
+        {{#if noAuthToken}}
+          <p class="message setupMissing">
+            The authentication token is missing. Please start the server again with a token:
+            <code class="code-block">
+              $ env GITHUB_ORG="{{org}}" GITHUB_TOKEN="your-token-here" open-github-teams
+            </code>
+            <img src="static/private_token.gif">
+          </p>
+        {{else if error}}
+          <p class="message error">
+            An Error occurred.
+            <pre>
+              {{{error}}}
+            </pre>
+          </p>
+        {{else if teams}}
+          <ul class="team-list">
+            {{#each teams}}
+              <li class="team-item">
+                <h2 id="team_{{slug}}">
+                  <a href="https://github.com/orgs/{{../org}}/teams/{{slug}}" title="Github settings for the {{name}} team." target="_blank">{{name}}</a>
+                </h2>
+                <p class="description team-description">{{description}}</p>
+                {{#if members}}
+                  <h3 id="team_{{slug}}_members">Members <small class="count">({{count members}})</small></h3>
+                  <ul class="member-list">{{#each members}}{{!--
+                  --}}<li class="member-item"><a href="https://github.com/{{login}}" title="`{{name}}` at Github" target="_blank" class="user">{{!--
+                    --}}{{#if avatar_url}}{{!--
+                      --}}<img src="{{avatar_url}}&amp;s=40" width="40" title="{{name}} @{{login}}">{{!--
+                    --}}{{/if}}{{!--
+                    --}}</a>{{!--
+                  --}}</li>{{!--
+                --}}{{/each}}{{!--
+              --}}</ul>
+                {{else}}
+                  <p class="message member-empty">No members in this team.</p>
+                {{/if}}
+                {{#if repos}}
+                  <h3 id="team_{{slug}}_repos">Repositories <small class="count">({{count repos}})</small></h3>
+                  <ul class="repo-list">{{!--
+                --}}{{#each repos}}{{!--
+                  --}}<li class="repo-item">{{!--
+                    --}}<a href="https://github.com/{{full_name}}" title="{{description}}" target="_blank">{{name}}</a>{{!--
+                  --}}</li>{{!--
+                --}}{{/each}}{{!--
+              --}}</ul>
+                {{else}}
+                  <p class="message repo-empty">No repositories have been assigned to this team.</p>
+                {{/if}}
+              </li>
+            {{/each}}
+          </ul>
+        {{else}}
+          <p class="message page-empty">No Teams were found in this Organization.</p>
+        {{/if}}
+      </section>
+      <footer id="footer">
+        {{#if hasWebhook}}
+          {{#if lastWebhook}}
+            <p class="webhook webhook-ok">
+              Last webhook trigger was at {{lastWebhook}}</span>
+            </p>
+          {{else}}
+            <p class="webhook webhook-missing">
+              Webhooks are setup but it has <strong>yet</strong> to be triggered.
+            </p>
+          {{/if}}
+        {{else}}
+          <p class="webhook webhook-disabled">
+            This repository will <strong>not</strong> be immediately updated when a change happens at github.
+            It is possible to setup immediate updates through webhooks.
+          </p>
+          <p class="webhook webhook-learn">
+            Learn how to setup immediate updates  <a href="https://github.com/martinheidegger/open-github-teams#immediate-update" title="Immediate Update Guide." target="_blank">here</a>.
+          </p>
+        {{/if}}
+        {{#if nextAutoUpdate}}
+          <p class="webhook webhook-next">
+            The next automatic update will be at <span class="webhook-update">{{nextAutoUpdate}}</span>.
+          </p>
+        {{/if}}
+        <div class="credits">
+          <a href="http://github.com/martinheidegger/open-github-teams" target="_blank" title="Project Homepage">Open Github Teams</a> is an
+          <a href="https://opensource.org/" target="_blank" title="Definition Opensource">Open Source</a> project by
+          <a href="https://github.com/martinheidegger" target="_blank" title="Martin Heideggers Github page">Martin Heidegger</a>.
+        </div>
+      </footer>
+    {{else}}
+      <header>
+        <h1>Setup: Add organization</h1>
+      </header>
+      <section>
+        <p class="message org-missing">
+          The organization is missing. Please specify the organization when restarting the server.
+          <code class="code-block">
+            $ env GITHUB_ORG="your org here" open-github-teams
+          </code>
+        </p>
+      </section>
+    {{/if}}
+  </body>
+</html>

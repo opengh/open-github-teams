@@ -1,9 +1,157 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
 body {
-  padding-bottom: 4em;
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/*
+*/
+body {
+  font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+h1, h2, h3 {
+  padding-top: 0.75em;
+  padding-bottom: 0.2em;
+}
+h1 {
+  font-size: 3em;
+}
+h2 {
+  font-size: 2.2em;
+}
+h3 {
+  font-size: 1.8em;
+}
+a {
+  color: #4078c0;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.member-item {
+  display: inline-block;
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 1px;
+  width: 40px;
+  height: 40px;
+  border: none;
+}
+.member-item:hover {
+  border: none;
+}
+.member-item caption {
+  position: absolute;
+  display: none;
+}
+.member-item:hover caption {
+  display: block;
+}
+.repo-item {
+  display: inline;
+  margin-right: 0.4em;
+}
+.team-item {
+  display: block;
+  padding-bottom: 2.2em;
+  border-bottom: 1px solid #EEE;
+}
+header {
+  border-bottom: 1px solid #EEE;
+  background-color: #fcfcfc;
+  width: 100%;
+  display: block;
+  padding-bottom: 2em;
+}
+strong {
+  font-weight: bold;
+}
+small {
+  font-size: 0.8em;
+  color: #999;
+}
+body {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+section, footer, h1, .description {
+  max-width: 980px;
+  display: block;
+  text-align: left;
+  margin: 0 auto;
+}
+code {
+  font-family: monospace;
+}
+.code-block {
+  display: block;
+  background: black;
+  color: white;
+  margin: 1.2em 0;
+  padding: 2em;
+  border-radius: 3px;
+}
+.message, .message img {
+  margin-top: 1.2em;
 }
 footer {
-  position: fixed;
-  bottom: 0;
-  height: 4em;
-  background: white;
+  padding: 3em 0;
+}
+footer > * {
+  max-width: 980px;
+  display: block;
+}
+.repo-empty, .member-empty {
+  margin-top: 1em;
+}
+.credits {
+  margin-top: 1.2em;
+}
+.message {
+
 }
