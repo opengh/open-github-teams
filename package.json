@@ -33,7 +33,7 @@
     "auto-sni": "^0.8.1",
     "catbox": "^7.1.0",
     "github": "^0.2.4",
-    "good-console": "^5.3.0",
+    "good-console": "^5.3.1",
     "handlebars": "^4.0.5",
     "hapi": "^13.0.0",
     "inert": "^3.2.0",
@@ -45,7 +45,7 @@
     "coveralls": "^2.11.6",
     "istanbul": "^0.4.2",
     "mocha": "^2.4.5",
-    "standard": "^5.4.1"
+    "standard": "^6.0.1"
   },
   "directories": {
     "test": "test"
