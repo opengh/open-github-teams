@@ -1,6 +1,6 @@
 {
   "name": "open-github-teams",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Expose the github teams of an organization to the public as webpage and json using this Node.js server.",
   "main": "./lib/hapiPlugin",
   "scripts": {
