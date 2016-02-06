@@ -9,7 +9,7 @@ if (secret) {
   conn = {
     listener: createServer({
       // we need SSL for the webhook but the access is just-fine™ via http
-      forceSLL: false,
+      forceSSL: false,
       email: process.env.HTTPS_EMAIL,
       agreeTos: process.env.HTTPS_AGREE === 'yes',
       ports: {
@@ -22,7 +22,7 @@ if (secret) {
   }
 } else {
   conn = {
-    port: 80
+    port: process.env.HTTP_PORT || 80
   }
 }
 
