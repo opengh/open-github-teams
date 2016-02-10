@@ -38,7 +38,6 @@
     "hapi": "^13.0.0",
     "inert": "^3.2.0",
     "minimist": "^1.2.0",
-    "mocha": "^2.4.5",
     "vision": "^4.0.1"
   },
   "devDependencies": {
