@@ -28,6 +28,14 @@ a little configuration and makes the teams accessible via _JSON_ and _HTML_.
    ```
 4. Open the url in the browser after it says its connected. Enjoy.
 
+## Docker
+
+It is also possible to start the server with docker!
+
+```
+$ docker run martinheidegger:open-github-teams
+```
+
 ## Ports
 
 By default, the server will be started on the `80` port in http mode and Additionally
