@@ -30,7 +30,7 @@
   "license": "ISC",
   "dependencies": {
     "async": "^1.5.2",
-    "auto-sni": "^0.8.1",
+    "auto-sni": "^0.9.0",
     "catbox": "^7.1.0",
     "github": "^0.2.4",
     "good-console": "^5.3.1",
