@@ -4,7 +4,7 @@ var hapi = require('hapi')
 var secret = process.env.SECRET
 var conn
 
-if (secret) {
+if (secret && (process.env.HTTP_ONLY || '').toLowerCase() !== 'true') {
   var createServer = require('auto-sni')
   conn = {
     listener: createServer({

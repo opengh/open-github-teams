@@ -73,7 +73,8 @@ $ env GITHUB_TOKEN="<your-token-here>" \
      HTTPS_PORT=8443 \
      open-github-teams
 ```
-Steps to setup immediate update:
+
+Note: By default the server will start with https if you pass in. You can explicitly prevent that from happening by setting the environment variable `HTTP_ONLY` to `true`. 
 
 ### How to generate a good secret
 
