@@ -6,9 +6,9 @@
   "scripts": {
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "lint": "standard",
-    "test": "mocha -- test/**/*",
+    "test": "mocha -- --recursive test",
     "validate": "npm run lint && npm run coverage",
-    "coverage": "istanbul cover _mocha -- test/**/*"
+    "coverage": "istanbul cover _mocha -- --recursive test"
   },
   "keywords": [
     "github",
