@@ -103,7 +103,7 @@ describe('A well configured HAPI plugin', function () {
       assert.equal(result.statusCode, 200)
     })
   })
-  it('should allow webhooks with the correct secret', function () {
+  it('should allow webhooks with the correct sha256 secret', function () {
     var payload = 'abracarabra' + Math.random()
     var crypto = require('crypto')
     var hmac = crypto.createHmac('sha256', secret)
@@ -111,7 +111,24 @@ describe('A well configured HAPI plugin', function () {
     return server.inject({
       method: 'POST',
       headers: {
-        'X-Hub-Signature': hmac.digest('hex')
+        'X-Hub-Signature': 'sha256=' + hmac.digest('hex')
+      },
+      payload: payload,
+      url: '/webhook'
+    }).then(function (data) {
+      assert.equal(data.result.error, undefined)
+      assert.equal(data.result.success, true)
+    })
+  })
+  it('should allow webhooks with the correct sha1 secret', function () {
+    var payload = 'abracarabra' + Math.random()
+    var crypto = require('crypto')
+    var hmac = crypto.createHmac('sha1', secret)
+    hmac.update(payload)
+    return server.inject({
+      method: 'POST',
+      headers: {
+        'X-Hub-Signature': 'sha1=' + hmac.digest('hex')
       },
       payload: payload,
       url: '/webhook'
@@ -123,8 +140,6 @@ describe('A well configured HAPI plugin', function () {
   it('should notify about a missing signature', function () {
     var payload = 'abracarabra' + Math.random()
     var crypto = require('crypto')
-    var hmac = crypto.createHmac('sha256', secret + 'something')
-    hmac.update(payload)
     return server.inject({
       method: 'POST',
       headers: {
@@ -144,7 +159,7 @@ describe('A well configured HAPI plugin', function () {
     return server.inject({
       method: 'POST',
       headers: {
-        'X-Hub-Signature': hmac.digest('hex')
+        'X-Hub-Signature': 'sha256=' + hmac.digest('hex')
       },
       payload: payload,
       url: '/webhook'
