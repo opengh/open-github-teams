@@ -120,6 +120,22 @@ describe('A well configured HAPI plugin', function () {
       assert.equal(data.result.success, true)
     })
   })
+  it('should notify about a missing signature', function () {
+    var payload = 'abracarabra' + Math.random()
+    var crypto = require('crypto')
+    var hmac = crypto.createHmac('sha256', secret + 'something')
+    hmac.update(payload)
+    return server.inject({
+      method: 'POST',
+      headers: {
+      },
+      payload: payload,
+      url: '/webhook'
+    }).then(function (data) {
+      assert.equal(data.result.error, 'missing-signature')
+      assert.equal(data.result.success, undefined)
+    })
+  })
   it('should block webhooks with the wrong secret', function () {
     var payload = 'abracarabra' + Math.random()
     var crypto = require('crypto')
