@@ -1,5 +1,4 @@
 var count = require('../../../../web/views/helpers/count')
-console.log(count)
 var assert = require('assert')
 
 describe('counting of items in hbs arrays', function () {
