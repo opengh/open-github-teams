@@ -19,6 +19,7 @@
   "standard": {
     "globals": [
       "before",
+      "after",
       "describe",
       "it"
     ]

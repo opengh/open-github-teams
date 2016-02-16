@@ -1,7 +1,76 @@
 var hapiPlugin = require('../../lib/hapiPlugin')
 var assert = require('assert')
 
-describe('The hapi plugin', function () {
+describe('A hapi plugin with missing organization', function () {
+  var server
+  before(function (done) {
+    var hapi = require('hapi')
+    server = new hapi.Server()
+    server.connection({port: 32151})
+    server.register(hapiPlugin, function (err) {
+      assert.equal(err, null)
+      server.initialize(done)
+    })
+  })
+  after(function (done) {
+    server.stop(done)
+  })
+  it('should deliver an empty /', function () {
+    return server.inject({
+      url: '/'
+    })
+    .then(function (result) {
+      assert.equal(result.statusCode, 200)
+    })
+  })
+  it('should not deliver a teams.json', function () {
+    return server.inject({
+      url: '/teams.json'
+    })
+    .then(function (result) {
+      assert.equal(result.statusCode, 404)
+    })
+  })
+})
+
+describe('A hapi plugin with missing github token', function () {
+  var server
+  before(function (done) {
+    var hapi = require('hapi')
+    server = new hapi.Server()
+    server.connection({port: 32151})
+    server.register({
+      register: hapiPlugin,
+      options: {
+        githubOrganization: 'mona'
+      }
+    }, function (err) {
+      assert.equal(err, null)
+      server.initialize(done)
+    })
+  })
+  after(function (done) {
+    server.stop(done)
+  })
+  it('should deliver an empty /', function () {
+    return server.inject({
+      url: '/'
+    })
+    .then(function (result) {
+      assert.equal(result.statusCode, 200)
+    })
+  })
+  it('should not deliver a teams.json', function () {
+    return server.inject({
+      url: '/teams.json'
+    })
+    .then(function (result) {
+      assert.equal(result.statusCode, 404)
+    })
+  })
+})
+
+describe('A well configured HAPI plugin', function () {
   var server
   var secret = 'fancypants'
   before(function (done) {
@@ -19,6 +88,9 @@ describe('The hapi plugin', function () {
       assert.equal(err, null)
       server.initialize(done)
     })
+  })
+  after(function (done) {
+    server.stop(done)
   })
   it('should be named after the package.json', function () {
     assert.deepEqual(hapiPlugin.register.attributes.pkg, require('../../package.json'))
