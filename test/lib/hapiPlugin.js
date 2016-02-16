@@ -1,5 +1,6 @@
 var hapiPlugin = require('../../lib/hapiPlugin')
 var assert = require('assert')
+var crypto = require('crypto')
 
 describe('A hapi plugin with missing organization', function () {
   var server
@@ -105,7 +106,6 @@ describe('A well configured HAPI plugin', function () {
   })
   it('should allow webhooks with the correct sha256 secret', function () {
     var payload = 'abracarabra' + Math.random()
-    var crypto = require('crypto')
     var hmac = crypto.createHmac('sha256', secret)
     hmac.update(payload)
     return server.inject({
@@ -122,7 +122,6 @@ describe('A well configured HAPI plugin', function () {
   })
   it('should allow webhooks with the correct sha1 secret', function () {
     var payload = 'abracarabra' + Math.random()
-    var crypto = require('crypto')
     var hmac = crypto.createHmac('sha1', secret)
     hmac.update(payload)
     return server.inject({
@@ -139,7 +138,6 @@ describe('A well configured HAPI plugin', function () {
   })
   it('should notify about a missing signature', function () {
     var payload = 'abracarabra' + Math.random()
-    var crypto = require('crypto')
     return server.inject({
       method: 'POST',
       headers: {
@@ -153,7 +151,6 @@ describe('A well configured HAPI plugin', function () {
   })
   it('should block webhooks with the wrong secret', function () {
     var payload = 'abracarabra' + Math.random()
-    var crypto = require('crypto')
     var hmac = crypto.createHmac('sha256', secret + 'something')
     hmac.update(payload)
     return server.inject({
@@ -165,6 +162,36 @@ describe('A well configured HAPI plugin', function () {
       url: '/webhook'
     }).then(function (data) {
       assert.equal(data.result.error, 'wrong-signature')
+      assert.equal(data.result.success, undefined)
+    })
+  })
+  it('should block webhooks with a mal-formatted secret', function () {
+    var payload = 'abracarabra' + Math.random()
+    var hmac = crypto.createHmac('sha256', secret + 'something')
+    hmac.update(payload)
+    return server.inject({
+      method: 'POST',
+      headers: {
+        'X-Hub-Signature': hmac.digest('hex')
+      },
+      payload: payload,
+      url: '/webhook'
+    }).then(function (data) {
+      assert.equal(data.result.error, 'mal-formatted-signature')
+      assert.equal(data.result.success, undefined)
+    })
+  })
+  it('should block webhooks with a weird hash algorithm secret', function () {
+    var payload = 'abracarabra' + Math.random()
+    return server.inject({
+      method: 'POST',
+      headers: {
+        'X-Hub-Signature': 'fumble=abcd'
+      },
+      payload: payload,
+      url: '/webhook'
+    }).then(function (data) {
+      assert.equal(data.result.error, 'unknown-signature-hash')
       assert.equal(data.result.success, undefined)
     })
   })
