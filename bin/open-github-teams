@@ -2,7 +2,7 @@
 
 require('../lib/hapiServer')({
   connection: {
-    httpOnly: process.env.HTTP_ONLY,
+    httpOnly: /^\s*true|yes\s*$/ig.test(process.env.HTTP_ONLY),
     email: process.env.HTTPS_EMAIL,
     agreeTos: process.env.HTTPS_AGREE === 'yes',
     http: process.env.HTTP_PORT || 80,
