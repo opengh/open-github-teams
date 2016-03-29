@@ -1,50 +1,19 @@
 #!/usr/bin/env node
 
-var hapi = require('hapi')
-var secret = process.env.SECRET
-var conn
-
-if (secret && (process.env.HTTP_ONLY || '').toLowerCase() !== 'true') {
-  var createServer = require('auto-sni')
-  conn = {
-    listener: createServer({
-      // we need SSL for the webhook but the access is just-fine™ via http
-      forceSSL: false,
-      email: process.env.HTTPS_EMAIL,
-      agreeTos: process.env.HTTPS_AGREE === 'yes',
-      ports: {
-        http: process.env.HTTP_PORT || 80,
-        https: process.env.HTTPS_PORT || 443
-      }
-    }),
-    autoListen: false,
-    tls: true
-  }
-} else {
-  conn = {
-    port: process.env.HTTP_PORT || 80
-  }
-}
-
-var server = new hapi.Server()
-server.connection(conn)
-server.register([{
-  register: require('good'),
-  options: {
-    opsInterval: 1000,
-    reporters: [{
-      reporter: require('good-console'),
-      events: { log: '*', response: '*' }
-    }]
-  }
-}, {
-  register: require('../lib/hapiPlugin.js'),
-  options: {
+require('../lib/hapiServer')({
+  connection: {
+    httpOnly: /^\s*true|yes\s*$/ig.test(process.env.HTTP_ONLY),
+    email: process.env.HTTPS_EMAIL,
+    agreeTos: process.env.HTTPS_AGREE === 'yes',
+    http: process.env.HTTP_PORT || 80,
+    https: process.env.HTTPS_PORT || 443
+  },
+  openGithubTeams: {
     githubOrganization: process.env.GITHUB_ORG,
     githubApiToken: process.env.GITHUB_TOKEN,
-    webhookSecret: secret
+    webhookSecret: process.env.SECRET
   }
-}], function (err) {
+}, function (err, server) {
   if (err) throw err
   server.start(function (err) {
     if (err) throw err
