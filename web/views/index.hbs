@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8">
     <title>Github Teams of {{org}}</title>
-    <link rel="stylesheet" type="text/css" href="static/style.css"></link>
+    <link rel="stylesheet" type="text/css" href="{{path '/static/style.css'}}"></link>
   </head>
   <body>
     {{#if org}}
@@ -21,7 +21,7 @@
         {{/if}}
         <p class="description page-raw">
           {{#if teams}}
-          <strong>Raw:</strong> <a href="teams.json" target="_blank" title="Raw json file">teams.json</a><br>
+          <strong>Raw:</strong> <a href="{{path 'teams.json'}}" target="_blank" title="Raw json file">teams.json</a><br>
           {{/if}}
           <strong>Admin:</strong> <a
             href="https://github.com/orgs/nodeschool/teams"
@@ -37,7 +37,7 @@
             <code class="code-block">
               $ env GITHUB_ORG="{{org}}" GITHUB_TOKEN="your-token-here" open-github-teams
             </code>
-            <img src="static/private_token.gif">
+            <img src="{{path '/static/private_token.gif'}}">
           </p>
         {{else if error}}
           <p class="message error">
