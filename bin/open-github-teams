@@ -15,8 +15,14 @@ require('../lib/hapiServer')({
   }
 }, function (err, server) {
   if (err) throw err
-  server.start(function (err) {
+  server.register([{
+    register: require('./hapiPlugin.js'),
+    options: options.openGithubTeams
+  }], function (err) {
     if (err) throw err
-    console.log('Server running at:', server.info.uri)
+    server.start(function (err) {
+      if (err) throw err
+      console.log('Server running at:', server.info.uri)
+    })
   })
 })
